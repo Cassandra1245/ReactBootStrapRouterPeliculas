@@ -1,19 +1,39 @@
-import logo from './logo.svg';
-import MyGrid from './ComponentesGryd'
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import './App.css';
 
 function App() {
+  const [peliculas, setPeliculas] = useState([]);
+
+  useEffect(() => {
+    const fetchPeliculas = async () => {
+      const response = await fetch("./peliculas.json");
+      const data = await response.json();
+      setPeliculas(data);
+    };
+    fetchPeliculas();
+  }, []);
+
   return (
-    <div>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
-
-        <MyGrid />
-
-      </header>
-    </div>
+    <Container className="App">
+      {peliculas.map((dato) => (
+        <Row key={dato.titulo} className="mb-4">
+          <Col xs={12} md={8} className="d-flex justify-content-center mb-4">
+            <img
+              src={dato.foto}
+              alt={dato.titulo}
+              style={{ width: "500px"}}
+            />
+          </Col>
+          <Col xs={12} md={4} >
+            <h3>{dato.titulo}</h3>
+            <p>Actores: {dato.actoresPrincipales}</p>
+            <p>Director: {dato.director}</p>
+            <p>Sinopsis: {dato.sinopsis}</p>
+          </Col>
+        </Row>
+      ))}
+    </Container>
   );
 }
 
