@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Col, Row, Card, CardBody, ListGroup, CardFooter, Button } from "react-bootstrap";
 import './App.css';
 
 function App() {
+
   const [peliculas, setPeliculas] = useState([]);
+  const [Boton, setBoton] = useState({});
 
   useEffect(() => {
     const fetchPeliculas = async () => {
@@ -14,26 +16,45 @@ function App() {
     fetchPeliculas();
   }, []);
 
+  const mostrar = (titulo) => {
+    setBoton((prevState) => ({
+      ...prevState,
+      [titulo]: !prevState[titulo],
+    }));
+  };
+
   return (
-    <Container className="App">
-      {peliculas.map((dato) => (
-        <Row key={dato.titulo} className="mb-4">
-          <Col xs={12} md={8} className="d-flex justify-content-center mb-4">
-            <img
-              src={dato.foto}
-              alt={dato.titulo}
-              style={{ width: "500px"}}
-            />
-          </Col>
-          <Col xs={12} md={4} >
-            <h3>{dato.titulo}</h3>
-            <p>Actores: {dato.actoresPrincipales}</p>
-            <p>Director: {dato.director}</p>
-            <p>Sinopsis: {dato.sinopsis}</p>
-          </Col>
+    <div className="App">
+      <Container>
+        <Row>
+          {peliculas.map((dato) => (
+            <Col xs={12} md={3} xl={3}>
+              <Card key={dato.titulo} className="m-3">
+                <Card.Img variant="top" src={dato.foto} style={{ width: "100%" }} />
+                <Card.Header>
+                  <Card.Title>{dato.titulo}</Card.Title>
+                </Card.Header>
+                <CardBody>
+                  <ListGroup className="list-group-flush">
+                    <ListGroup.Item> Actores: {dato.actoresPrincipales}</ListGroup.Item>
+                    <ListGroup.Item>Director: {dato.director}</ListGroup.Item>
+                    <ListGroup.Item>Actores Principales: {dato.actoresPrincipales}</ListGroup.Item>
+                  </ListGroup>
+                </CardBody>
+                <Button variant="primary" onClick={() => mostrar(dato.titulo)}>
+                  {Boton[dato.titulo] ? "Menos" : "Mas"}
+                </Button>
+                {Boton[dato.titulo] && (
+                  <CardFooter>
+                    <Card.Text> {dato.sinopsis}</Card.Text>
+                  </CardFooter>
+                )}
+              </Card>
+            </Col>
+          ))}
         </Row>
-      ))}
-    </Container>
+      </Container>
+    </div>
   );
 }
 
