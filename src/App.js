@@ -25,7 +25,6 @@ function App() {
 
   return (
     <div className="App">
-      <Container>
         <Row>
           {peliculas.map((dato) => (
             <Col xs={12} md={3} xl={3}>
@@ -53,7 +52,6 @@ function App() {
             </Col>
           ))}
         </Row>
-      </Container>
     </div>
   );
 }
