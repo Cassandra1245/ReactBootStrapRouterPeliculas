@@ -6,7 +6,7 @@ function App() {
 
   const [peliculas, setPeliculas] = useState([]);
   const [Boton, setBoton] = useState({});
-  const [generos, setGeneros] = useState({})
+  
 
   useEffect(() => {
     const fetchPeliculas = async () => {
@@ -24,6 +24,10 @@ function App() {
     }));
   };
 
+  const generos = () =>{
+
+  }
+  
   const seleccionar = (titulo) => {
     setBoton((prevState) => ({
       ...prevState,
@@ -35,7 +39,7 @@ function App() {
     <div className="App">
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="./FondoAzul.jpeg">Peliculas</Navbar.Brand>
+          <Navbar.Brand href="./FondoAzul.jpeg"><img src="./FondoAzul.jpeg" width={35} height={35}></img></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
