@@ -6,13 +6,16 @@ function App() {
 
   const [peliculas, setPeliculas] = useState([]);
   const [Boton, setBoton] = useState({});
-  
+
 
   useEffect(() => {
     const fetchPeliculas = async () => {
       const response = await fetch("./peliculas.json");
       const data = await response.json();
       setPeliculas(data);
+
+      let aux_categorias = []
+      
     };
     fetchPeliculas();
   }, []);
@@ -24,10 +27,10 @@ function App() {
     }));
   };
 
-  const generos = () =>{
+  const generos = () => {
 
   }
-  
+
   const seleccionar = (titulo) => {
     setBoton((prevState) => ({
       ...prevState,
