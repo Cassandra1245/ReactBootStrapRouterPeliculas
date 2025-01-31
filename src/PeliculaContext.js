@@ -1,32 +1,25 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
+const PeliculasContext = createContext("Peliculas");
 
-const removePelicula= (item) => {
-    setPeliculas(peliculas.filter(item=>))
-}
-
-
-
-const CartContext = createContext();
-
-export const PeliculasContext = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+export const PeliculaProvider = ({ children }) => {
+  const [peliculas, setPeliculas] = useState([]);
 
   const addPelicula = (item) => {
-    setCartItems([...cartItems, item]);
+    setPeliculas([...peliculas, item]);
   };
 
   const removePelicula = (itemId) => {
-    setCartItems(cartItems.filter(item => item.id !== itemId));
+    setPeliculas(peliculas.filter(item => item.id !== itemId));
   };
 
   useEffect(() => {
-    const fetchPeliculas = async () => {
-      const response = await fetch("./peliculas.json");
-      const data = await response.json();
-      setPeliculas(data);
+    const loadPelicula = async () => {
+      const response = await fetch('./peliculas.json');
+      const json = await response.json();
+      setPeliculas(json);
     };
-    fetchPeliculas();
+    loadPelicula();
   }, []);
 
   return (
@@ -35,3 +28,5 @@ export const PeliculasContext = ({ children }) => {
     </PeliculasContext.Provider>
   );
 };
+
+export default PeliculasContext;
